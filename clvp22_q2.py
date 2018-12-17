@@ -1,5 +1,6 @@
 k_ephemeral = []
 
+
 def count_ephemeral(n1,n2,k):
     global k_ephemeral
     k_ephemeral = []
