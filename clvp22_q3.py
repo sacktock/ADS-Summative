@@ -57,52 +57,82 @@ class Queue:
             self.rear.after = Node(data, self.rear)
             self.rear = self.rear.after
 
-def good_expression(infixexpr):
+
+###########
+#Algorithm#
+###########
+            
+def good_expression(string):
      
-    prec = {}
-    prec["*"] = 3
-    prec["/"] = 3
-    prec["+"] = 2
-    prec["-"] = 2
-    prec["("] = 1
-    opStack = Stack()
-    postfixList = []
-    tokenList = list(infixexpr)
+    p = {"*":3,"+":2,"(":1,")":1} #operator precedence dictionary
+    
+    opStack = Stack() #stack for operators
+    leftStack = Stack() #stack for operators left of some brackets
+    rightStack = Stack() #stack for operators right of some brackets
+    lowStack = Stack() #stack holding the precedence of the lowest precedence operator between 2 brackets
+    lst = list(string) #list of opertors and operands
 
-    for token in tokenList:
-        if token in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" or token in "0123456789":
-            postfixList.append(token)
-        elif token == '(':
-            opStack.push(token)
-        elif token == ')':
-            topToken = opStack.pop()
-            while topToken != '(':
-                postfixList.append(topToken)
-                topToken = opStack.pop()
-        else:
-            while (not opStack.isEmpty()) and \
-               (prec[opStack.top()] >= prec[token]):
-                  postfixList.append(opStack.pop())
-            opStack.push(token)
+    for i in range(0,len(lst)):
+        char = lst[i]
+        if char not in "0123456789":
+            if char == '(':
+                opStack.push(char) #push open brackets onto operator stack
+                
+                if i > 0:
+                    Left = p[lst[i-1]] #get the precedence of operator left of the brackets
+                else:
+                    Left = 0 #if there is no operator left of the brackets set the precedence to 0
 
-    while not opStack.isEmpty():
-        postfixList.append(opStack.pop())
-    return " ".join(postfixList)
+                leftStack.push(Left) #push the precedence to the left stack
+                    
+            elif char == ')':
+                top = opStack.pop() #pop next operator
+                
+                if top == '(': return False #if we find a close brackets immediately we have a double brackets case so redundant brackets
+                
+                lowStack.push(p[top]) #push the precedence of the next operator to the low stack
+                
+                if i != len(lst) -1:
+                    Right = p[lst[i+1]] #get the precedence of the operator right of the brackets
+                else:
+                    Right = 0 #if there is no operator right of the brackets set the precedence to 0
 
+                rightStack.push(Right) # push the precedence to the right stack
+                
+                while top != '(': #loop until we find a close brackets
+                    
+                    if p[top] < lowStack.top(): #if we find an operator with a lower precedence than we already have
+                        lowStack.pop()  #replace the operator on the top of the low stack with precedence of the new operator that has lower precedence
+                        lowStack.push(p[top])
+                    
+                    top = opStack.pop() #find the next operator
+
+                X = lowStack.pop() #set X to the precedence of the lowest precedence operator within the 2 backets (that is not in another pair of backets)
+                Left = leftStack.pop() # set Left to the precedence of the operator left of the brackets
+                Right = rightStack.pop() #set Right to the precedence of the operator right of the brackets
+                
+                if not(X < Left or X < Right): #If X is not less than Left or Right then we have redundant brackets
+                    return False
+            else:
+                while (not opStack.isEmpty()) and (p[opStack.top()] >= p[char]):
+                      opStack.pop() #pop top operator until the top does not have a higher precedence than the incoming operator
+                opStack.push(char) #push operator to operator stack
+                
+    return True #no redundant brackets after expression has been character wise evaluated
 
 #####################################################
             
 
 def testq3():
-    print (good_expression("1+2+3+4")) 
-    print (good_expression("(1+2+3+4)")) 
-    print (good_expression("(1+2)*3+4")) 
-    print (good_expression("((1+2))*3+4")) 
-    print (good_expression("1+2*3+4")) 
-    print (good_expression("1+(2*3)+4")) 
-    print (good_expression("1*2+3+4")) 
-    print (good_expression("1*2+(3+4)")) 
+    assert good_expression("1+2+3+4") 
+    assert not good_expression("(1+2+3+4)") 
+    assert good_expression("(1+2)*3+4") 
+    assert not good_expression("((1+2))*3+4") 
+    assert good_expression("1+2*3+4") 
+    assert not good_expression("1+(2*3)+4") 
+    assert good_expression("1*2+3+4") 
+    assert not good_expression("1*2+(3+4)") 
     print ("all tests passed")
     
 #####################################################
-testq3()
+
