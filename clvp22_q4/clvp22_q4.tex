@@ -25,8 +25,8 @@
 \begin{document}
 \maketitle
 
-\section{Question 4}
-\subsection{4. a)}
+\section*{Question 4.}
+\subsection*{(a)}
 Firstly we can say $x^3+3x +2$ is $O(x^3)$ because there exists some $k$ and $C$ such that,
 $$x^3+3x+2 \leq C \cdot x^3 $$
 for every $x \geq k$.
@@ -42,7 +42,7 @@ for every $x \geq k$.
 So,
 $$ C \geq 2x$$
 however, $2x$ grows monotonically for $x > 0$. This is a contradiction because then no constant value for $C$ can be found for $k>0$. Therefore $2x^4$ is not $O(x^3)$ and consequently not $O(x^3+3x +2)$.
-\subsection{4. b)}
+\subsection*{(b)}
 For $x \geq 2$, $1 \leq \log x \leq x \leq x^2 \leq x^3$.
 \\
 \\
@@ -57,7 +57,7 @@ for every $x \geq k$.
 \\
 \\
 Therefore $4x^3+2x^2 \cdot \log x +1$ is $O(x^3)$.
-\subsection{4. c)}
+\subsection*{(c)}
 $3x^2+7x+1$ is $\omega (x \cdot \log x)$ if and only if $x \cdot \log x$ is $o(3x^2+7x+1)$, which is,
 $$\displaystyle{\lim_{x \to \infty}} \frac{C \cdot x \log x}{3x^2+7x+1}$$
 for every $x \geq k$.
@@ -66,7 +66,7 @@ for every $x \geq k$.
 For $x \geq 2$, $1 \leq \log x \leq x \leq x^2$. 
 \\
 So $3x^2+7x+1$ grows faster than $x \cdot \log x$ so $\displaystyle{\lim_{x \to \infty}} \frac{C \cdot x \log x}{3x^2+7x+1}$ holds for $k = 2$ and $C=1$. Therefore, $x \cdot \log x$ is $o(3x^2+7x+1)$, and consequently $3x^2+7x+1$ is $\omega (x \cdot \log x)$.
-\subsection{4. d)}
+\subsection*{(d)}
 For $x \geq 2$, $\log x \leq x \leq x^2$.
 \\
 \\
@@ -78,6 +78,6 @@ for every $x \geq k$.
 This inequality holds using $k = 2$ and $C = 1$ as a pair of witnesses,
 $$x^2+4x \geq C \cdot x \log x$$
 Therefore $x^2+4x$ is $\Omega (x \cdot \log x)$.
-\subsection{4. e)}
+\subsection*{(e)}
 
 \end{document}
