@@ -79,5 +79,23 @@ This inequality holds using $k = 2$ and $C = 1$ as a pair of witnesses,
 $$x^2+4x \geq C \cdot x \log x$$
 Therefore $x^2+4x$ is $\Omega (x \cdot \log x)$.
 \subsection*{(e)}
-
+$f(x)+g(x)$ is $\Theta (f(x) \cdot g(x))$, if $f(x)+g(x)$ is $O(f(x) \cdot g(x))$ and if $f(x)+g(x)$ is $\Omega (f(x) \cdot g(x))$.
+\\
+Suppose $f(x)$ is $O(g(x))$, or in other words, 
+$$ f(x) \leq C \cdot g(x)$$
+We can now ignore $f(x)$ from our previous statement as $g(x)$ dominates $f(x)$. Our question can be re-constructed as follows,
+\\
+\\
+Is $g(x)$ $\Theta (f(x) \cdot g(x))$, for some $f(x)$, where $f(x)$ is $O(g(x))$.
+\\
+\\
+Again, $g(x)$ is $\Theta (f(x) \cdot g(x))$, if $g(x)$ is $O(f(x) \cdot g(x))$ and if $g(x)$ is $\Omega (f(x) \cdot g(x))$. 
+\\
+Or in other words,
+$$g(x) \leq C \cdot f(x) \cdot g(x) $$
+and
+$$g(x) \geq C \cdot f(x) \cdot g(x)$$
+so,
+$$C_{1} \cdot f(x) \cdot g(x) \leq g(x) \leq C_{2} \cdot f(x) \cdot g(x) $$
+Clearly this inequality can only be satisified if and only if $f(x)$ is a non-zero constant function. If however we said $g(x)$ is $O(f(x))$ then the same principles can be applied and the original statement could only be satisified if and only if $g(x)$ is a non-zero constant funtcion instead. So $f(x)+g(x)$ is not $\Theta (f(x) \cdot g(x))$ for non-constant functions $f(x)$ and $g(x)$.
 \end{document}
