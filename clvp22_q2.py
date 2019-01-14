@@ -1,9 +1,11 @@
-k_ephemeral = []
+k_numbers = {}
 
 
 def count_ephemeral(n1,n2,k):
-    global k_ephemeral
-    k_ephemeral = []
+
+    global k_numbers
+    k_numbers.clear() #clear dictionary for the next calculation
+    
     if n1 > n2: # if n1 is bigger than n2 then swap them
         temp = n1
         n1 = n2
@@ -23,19 +25,29 @@ def count_ephemeral(n1,n2,k):
     return count
 
 def isK_ephemeral(n,k):
-    global k_ephemeral
+    global k_numbers
     lst = [n] #list stores previous k-children
     while True:
         n = k_child(n,k) #calculate next k-child
-        if n in k_ephemeral: #if n has already found to be k-ephemeral then return true
-            k_ephemeral += lst[:-1]
-            return True
-        if n == 1: #if 1 then n is k-ephemeral
-            k_ephemeral += lst
-            return True
-        if n in lst: #if pevious k-child is found then n is k-eternal
-            return False
-        lst.append(n)
+        if n in k_numbers.keys(): #if n has already been evaluated then look in dictionary
+            if k_numbers[n]: #if n is k-ephemeral 
+                for i in range(0,len(lst)-1):
+                    k_numbers[lst[i]] = True #k parents are also k-ephemeral
+                return True
+            if not k_numbers[n]: #if n is k-eternal
+                for i in range(0,len(lst)-1):
+                    k_numbers[lst[i]] = False #k parents are also k-eternal
+                return False
+        else:
+            if n == 1: #n is k-ephemeral by definition
+                for i in range(0,len(lst)):
+                    k_numbers[lst[i]] = True #k parents are also k-ephemeral
+                return True
+            if n in lst: #n is k-eternal by definition
+                for i in range(0,len(lst)):
+                    k_numbers[lst[i]] = False #k parents are also k-eternal
+                return False
+        lst.append(n) # add n to k-parent list
     
 
 def k_child(n,k): #calculates k-child of n
