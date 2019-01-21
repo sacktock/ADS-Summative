@@ -1,12 +1,14 @@
+import timeit
+
 k_numbers = {}
 
-
 def count_ephemeral(n1,n2,k):
+    start = timeit.default_timer()
 
     global k_numbers
-    k_numbers.clear() #clear dictionary for the next calculation
+    k_numbers = {1:True} #initialize dictionary for the next calculation
     
-    if n1 > n2: # if n1 is bigger than n2 then swap them
+    if n1 > n2: #if n1 is bigger than n2 then swap them
         temp = n1
         n1 = n2
         n2 = temp
@@ -22,40 +24,47 @@ def count_ephemeral(n1,n2,k):
     for ni in range(n1,n2):
         if isK_ephemeral(ni,k): #increment counter if ni is k-ephemeral
             count += 1
+
+    stop = timeit.default_timer()
+    print('Time: ', stop - start)
     return count
 
 def isK_ephemeral(n,k):
     global k_numbers
-    lst = [n] #list stores previous k-children
+    lst = [] #list stores previous k-children
     while True:
         n = k_child(n,k) #calculate next k-child
         if n in k_numbers.keys(): #if n has already been evaluated then look in dictionary
             if k_numbers[n]: #if n is k-ephemeral 
-                for i in range(0,len(lst)-1):
-                    k_numbers[lst[i]] = True #k parents are also k-ephemeral
+                while lst:
+                    k_numbers[lst.pop()] = True #k parents are also k-ephemeral
                 return True
             if not k_numbers[n]: #if n is k-eternal
-                for i in range(0,len(lst)-1):
-                    k_numbers[lst[i]] = False #k parents are also k-eternal
+                while lst:
+                    k_numbers[lst.pop()] = False #k parents are also k-eternal
                 return False
-        else:
-            if n == 1: #n is k-ephemeral by definition
-                for i in range(0,len(lst)):
-                    k_numbers[lst[i]] = True #k parents are also k-ephemeral
-                return True
-            if n in lst: #n is k-eternal by definition
-                for i in range(0,len(lst)):
-                    k_numbers[lst[i]] = False #k parents are also k-eternal
-                return False
+        
+        #if n == 1: #n is k-ephemeral by definition
+            #while lst:
+                #k_numbers[lst.pop()] = True #k parents are also k-ephemeral
+            #return True
+            #this case is implicitly handled by setting k_numbers to {1:True}
+            
+        if n in lst: #n is k-eternal by definition
+            while lst:
+                k_numbers[lst.pop()] = False #k parents are also k-eternal
+            return False
         lst.append(n) # add n to k-parent list
+        
     
 
 def k_child(n,k): #calculates k-child of n
     s = 0
     while n:
-        s += (n % 10)**k
-        n = n // 10
+        s, n = s + (n % 10)**k, n // 10
     return s
+
+
 
 #q2test.py
 """test function for question 2 of the ADS assignment, 2018-19"""
