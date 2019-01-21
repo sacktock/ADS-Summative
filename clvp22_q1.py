@@ -1,4 +1,12 @@
 
+###solutions in python 3.7.1###
+
+def h(k): #initial hash function
+    return (6*k+3)%19
+
+def h1(k): #secondary hash function
+    return 11 - (k % 11)
+
 def hash_quadratic(d):
     table = ["-"]*19 #initialize table 
     for k in d:
@@ -22,12 +30,6 @@ def hash_quadratic(d):
 
     return table
 
-def h1(k): #secondary hash function
-    return 11 - (k % 11)
-
-def h(k): #initial hash function
-    return (6*k+3)%19
-
 def hash_double(d):
     table = ["-"]*19 #initialize table
     for k in d:
@@ -50,12 +52,16 @@ def hash_double(d):
         table[i] = k
 
     return table
-
+	
 #q1test.py
 #algorithms and data structures assignment q1
 #matthew johnson 23 november 2018
 
 #####################################################
+
+
+
+
 
 def test_hq():
     assert hash_quadratic([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]) == [9, 6, 3, 19, 16, 13, 10, 7, 4, 1, 17, 14, 11, 8, 5, 2, 18, 15, 12]
