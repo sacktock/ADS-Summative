@@ -1,5 +1,7 @@
-k_numbers = {}
 
+###solutions in python 3.7.1###
+
+k_numbers = {}
 
 def count_ephemeral(n1,n2,k):
 

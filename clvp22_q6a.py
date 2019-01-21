@@ -1,4 +1,4 @@
-def msort(A): #sorts a list A in descending order
+def merge_sort(A): #sorts a list A in descending order
     if len(A) <= 4: #lists with length 4 or less go into the base case
         return selectionsort(A) #base case calls selection sort
 
@@ -11,7 +11,7 @@ def msort(A): #sorts a list A in descending order
     leftA = msort(leftA) #sorting both halves of the list
     rightA = msort(rightA)
 
-    return merge(leftA,rightA) #merging to halves together
+    return merge(leftA,rightA) #merging to haalves together
 
 def merge(leftA, rightA):
     A = [] #initialise answer

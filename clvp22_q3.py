@@ -58,9 +58,11 @@ class Queue:
             self.rear = self.rear.after
 
 
-###########
-#Algorithm#
-###########
+##########
+#Solution#
+##########
+
+###solution in python 3.7.1###
             
 def good_expression(string):
      
