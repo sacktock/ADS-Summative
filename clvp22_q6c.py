@@ -1,3 +1,5 @@
+###solution in python 3.7.1###
+
 def merge_sort(A): #sorts a list A in descending order
     if len(A) <= 4: #lists with length 4 or less go into the base case
         return selectionsort(A) #base case calls selection sort
@@ -8,8 +10,8 @@ def merge_sort(A): #sorts a list A in descending order
     leftA = A[:pivot] #slicing list into 2 halves
     rightA = A[pivot:]
 
-    leftA = msort(leftA) #sorting both halves of the list
-    rightA = msort(rightA)
+    leftA = merge_sort(leftA) #sorting both halves of the list
+    rightA = merge_sort(rightA)
 
     return merge(leftA,rightA) #merging to haalves together
 
